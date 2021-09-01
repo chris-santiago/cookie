@@ -1,0 +1,12 @@
+{
+  "python_version": ["3.7", "3.8", "3.9"],
+  "project_name": "Python Project",
+  "project_author": "Chris Santiago",
+  "author_email": "cjsantiago@gatech.edu",
+  "github_username": "chris-santiago",
+  "github_owner": "{{cookiecutter.github_username}}",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+  "project_github_url": "https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}",
+  "project_github_pip" : "git+https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}.git"
+}
