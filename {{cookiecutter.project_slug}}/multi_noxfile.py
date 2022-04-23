@@ -5,14 +5,6 @@ TEST_VERSIONS = ['3.7', '3.8', '3.9']
 
 
 @nox.session(venv_backend='conda', python=TEST_VERSIONS, reuse_venv=True)
-def test_other(session):
-    """Run unit tests in current Python environment."""
-    session.install('pytest', 'pytest-cov')
-    session.install('.')
-    session.run('pytest')
-
-
-@nox.session(reuse_venv=True)
 def tests(session):
     """Run unit tests in current Python environment."""
     session.install('pytest', 'pytest-cov')

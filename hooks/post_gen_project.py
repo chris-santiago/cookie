@@ -22,6 +22,9 @@ def main():
         cleanup(['noxfile.py'])
         os.rename('multi_noxfile.py', 'noxfile.py')
 
+    if '{{cookiecutter.test_multiple_versions}}' == 'no':
+        cleanup(['multi_noxfile.py'])
+
 
 if __name__ == '__main__':
     main()
