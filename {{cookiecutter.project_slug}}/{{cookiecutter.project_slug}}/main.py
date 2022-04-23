@@ -1,3 +1,4 @@
+"""CLI module."""
 import argparse
 
 from {{cookiecutter.project_slug}}.hello_world import hello_world_cli
@@ -13,4 +14,3 @@ def run(parser: argparse.ArgumentParser):
     """Run from CLI."""
     args = parser.parse_args()
     hello_world_cli(args)
-
