@@ -16,3 +16,7 @@ def main():
     """Run hooks."""
     if '{{cookiecutter.cli_tool}}' == 'no':
         cleanup(['main.py'])
+
+
+if __name__ == '__main__':
+    main()
