@@ -1,5 +1,7 @@
 {
   "python_version": ["3.7", "3.8", "3.9"],
+  "test_multiple_versions": ["yes", "no"],
+  "cli_tool": ["no", "yes"],
   "project_name": "Python Project",
   "project_author": "Chris Santiago",
   "author_email": "cjsantiago@gatech.edu",

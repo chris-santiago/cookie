@@ -2,6 +2,28 @@ import nox
 
 PROJECT = '{{cookiecutter.project_slug}}'
 
+{%- if cookiecutter.test_multiple_versions == "yes" -%}
+MIN_PYTHON = '3.7'
+CURR_PYTHON = '{{cookiecutter.python_version}}'
+
+def python_versions():
+    return [
+        f'3.{v}'
+        for v in range(
+            int(MIN_PYTHON.rsplit('.', 1)[-1]), int(CURR_PYTHON.rsplit('.', 1)[-1]),
+        )
+    ]
+
+
+@nox.session(venv_backend='conda', python=python_versions(), reuse_venv=True)
+def test_other(session):
+    """Run unit tests in current Python environment."""
+    session.install('pytest', 'pytest-cov')
+    session.install('.')
+    session.run('pytest')
+
+{% endif %}
+
 
 @nox.session(reuse_venv=True)
 def tests(session):
@@ -17,7 +39,7 @@ def lint(session):
     session.run('pylint', PROJECT, '--verbose')
     session.run('flake8', PROJECT, '--count', '--statistics', '--select=E9,F63,F7,F82', '--show-source')  # these fail
     session.run('flake8', PROJECT, '--count', '--statistics', '--exit-zero')  # these warn
-    session.run('mypy', '-p', PROJECT)
+    session.run('mypy', '--install-types', '--non-interactive', PROJECT)  # for library stubs
 
 
 @nox.session(python=False)
