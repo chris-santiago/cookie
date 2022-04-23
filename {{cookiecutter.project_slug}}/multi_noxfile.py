@@ -1,19 +1,10 @@
 import nox
 
 PROJECT = '{{cookiecutter.project_slug}}'
-MIN_PYTHON = '3.7'
-CURR_PYTHON = '{{cookiecutter.python_version}}'
-
-def python_versions():
-    return [
-        f'3.{v}'
-        for v in range(
-            int(MIN_PYTHON.rsplit('.', 1)[-1]), int(CURR_PYTHON.rsplit('.', 1)[-1]),
-        )
-    ]
+TEST_VERSIONS = ['3.7', '3.8', '3.9']
 
 
-@nox.session(venv_backend='conda', python=python_versions(), reuse_venv=True)
+@nox.session(venv_backend='conda', python=TEST_VERSIONS, reuse_venv=True)
 def test_other(session):
     """Run unit tests in current Python environment."""
     session.install('pytest', 'pytest-cov')

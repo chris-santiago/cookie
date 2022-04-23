@@ -1,4 +1,5 @@
 import shutil
+import os
 from pathlib import Path
 from typing import List
 
@@ -16,6 +17,10 @@ def main():
     """Run hooks."""
     if '{{cookiecutter.cli_tool}}' == 'no':
         cleanup(['main.py'])
+
+    if '{{cookiecutter.test_multiple_versions}}' == 'yes':
+        cleanup(['noxfile.py'])
+        os.rename('multi_noxfile.py', 'noxfile.py')
 
 
 if __name__ == '__main__':
