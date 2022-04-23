@@ -34,4 +34,3 @@ def qa(session):
     session.run('isort', '.')
     session.run('pre-commit', 'run', 'trailing-whitespace', '--files', '*.py')
     session.run('pre-commit', 'run', 'end-of-file-fixer', '--files', '*.py')
-    session.run('pre-commit', 'run', 'check-yaml', '--all-files')
