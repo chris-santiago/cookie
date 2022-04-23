@@ -16,7 +16,7 @@ def cleanup(paths: List[str]) -> None:
 def main():
     """Run hooks."""
     if '{{cookiecutter.cli_tool}}' == 'no':
-        cleanup(['main.py'])
+        cleanup(['{{cookiecutter.project_slug}}/main.py'])
 
     if '{{cookiecutter.test_multiple_versions}}' == 'yes':
         cleanup(['noxfile.py'])

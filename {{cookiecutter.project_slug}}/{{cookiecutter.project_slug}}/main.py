@@ -1,6 +1,6 @@
 import argparse
 
-from {{cookiecutter.project_slug}}.hello_world import hello_world
+from {{cookiecutter.project_slug}}.hello_world import hello_world_cli
 
 
 def get_parser():
@@ -9,6 +9,8 @@ def get_parser():
     return parser
 
 
-def run(parser):
+def run(parser: argparse.ArgumentParser):
     """Run from CLI."""
-    hello_world()
+    args = parser.parse_args()
+    hello_world_cli(args)
+
