@@ -6,11 +6,9 @@ repos:
     rev: stable
     hooks:
       - id: trailing-whitespace
-        files: .py$
-        exclude: (^tests/|^docs/)
+#        exclude: (^tests/|^docs/)
       - id: end-of-file-fixer
-        files: .py$
-        exclude: (^tests/|^docs/)
+#        exclude: (^tests/|^docs/)
       - id: check-yaml
       - id: check-added-large-files
       - id: debug-statements
