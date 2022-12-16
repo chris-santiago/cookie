@@ -7,10 +7,10 @@ repos:
     hooks:
       - id: trailing-whitespace
         files: .py$
-        exclude: (^tests/|^docs/)
+#        exclude: (^tests/|^docs/)
       - id: end-of-file-fixer
         files: .py$
-        exclude: (^tests/|^docs/)
+#        exclude: (^tests/|^docs/)
       - id: check-yaml
       - id: check-added-large-files
       - id: debug-statements
@@ -26,13 +26,14 @@ repos:
     hooks:
       - id: black
         types: [file, python]
+#        exclude: (^tests/|^docs/)
   # -------------------- Flake8 --------------------
   - repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
         additional_dependencies: [ flake8-docstrings ]
-        exclude: (^tests/|^docs/)
+#        exclude: (^tests/|^docs/)
         args: [
             '--count',
             '--statistics',
