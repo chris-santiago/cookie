@@ -43,7 +43,8 @@ qa = [
     "mypy",
     "nox",
     "check-manifest",
-    "isort"
+    "isort",
+    "pylint"
 ]
 
 build = [
