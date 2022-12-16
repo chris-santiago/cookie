@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build.meta"
+build-backend = "setuptools.build_meta"
 
 
 [project]
@@ -8,7 +8,7 @@ name = "{{cookiecutter.project_slug}}"
 version = "0.1.0"
 description = "{{cookiecutter.project_short_description}}"
 readme = "README.md"
-license = "MIT License"
+license = { text ="MIT License" }
 requires-python = ">={{cookiecutter.python_version}}"
 
 authors = [
@@ -49,7 +49,6 @@ qa = [
 build = [
     "twine",
     "wheel",
-    "build"
 ]
 
 dev = [
@@ -65,12 +64,12 @@ dev = [
 "Documentation" = "https://chris-santiago.github.io/{{cookiecutter.project_slug}}/"
 
 
-[tools.setuptools]
+[tool.setuptools]
 include-package-data = true
 zip-safe = false
 
 
-[tools.setuptools.packages.find]
+[tool.setuptools.packages.find]
 where = ["."]
 exclude = ["tests/*"]
 

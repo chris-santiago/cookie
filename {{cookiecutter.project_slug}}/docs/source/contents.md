@@ -23,4 +23,3 @@ caption: Contents
 changelog
 Github Repo <{{cookiecutter.project_github_url}}>
 ```
-

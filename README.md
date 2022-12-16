@@ -70,6 +70,7 @@ create a new project directory using your response to the `project_slug` prompt.
 cd yourproject
 pip install -e .[docs,tests,qa,build]
 git init
+pre-commit autoupdate
 pre-commit install
 git add --all
 git commit -m "initial"
@@ -83,7 +84,7 @@ nox > Running session test_prod_python
 nox > Re-using existing conda env at .nox/test_prod_python.
 nox > python -m pip install pytest pytest-cov
 nox > python -m pip install .
-nox > pytest 
+nox > pytest
 ...
 ...
 ...
