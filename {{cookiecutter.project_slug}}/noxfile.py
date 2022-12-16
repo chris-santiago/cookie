@@ -73,5 +73,5 @@ def qa(session):
 @nox.session(python=False)
 def docs(session):
     """Build package documentation."""
-    session.run("sphinx-apidoc", PROJECT, "-o", "docs/source/")
+    session.run("sphinx-apidoc", "--separate", "-f", PROJECT, "-o", "docs/source/")
     session.run("sphinx-build", "-b", "html", "docs/source/", "docs/build/html")
