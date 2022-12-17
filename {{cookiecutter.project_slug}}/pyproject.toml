@@ -87,6 +87,7 @@ ignore = [
     ".pylintrc",
     "Makefile",
     "noxfile.py",
+    "init.sh",
 ]
 
 

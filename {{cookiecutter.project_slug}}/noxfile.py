@@ -93,7 +93,7 @@ def black(session):
 @nox.session(python=False, tags=["pre-release"])
 def manifest(session):
     """Check distribution manifest."""
-    session.run("check-manifest", PROJECT)
+    session.run("check-manifest", ".")
 
 
 @nox.session(python=False, tags=["qa", "pre-release"])
