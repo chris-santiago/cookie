@@ -2,8 +2,7 @@ import sys
 
 import nox
 
-nox.options.sessions = ["test_system_python"]
-nox.options.tags = ["qa"]
+nox.options.tags = ["pytest", "qa"]  # default tags to run using command `nox`
 
 PROJECT = "{{cookiecutter.project_slug}}"
 PYTHON_REQUIRES = "{{cookiecutter.python_requires}}"
@@ -44,7 +43,7 @@ def test_supported_python(session):
     session.run("pytest")
 
 
-@nox.session(reuse_venv=True, tags=["quick"])
+@nox.session(reuse_venv=True, tags=["quick", "pytest"])
 def test_system_python(session):
     """Run unit tests in current Python environment."""
     session.install("pytest", "pytest-cov")
@@ -52,19 +51,19 @@ def test_system_python(session):
     session.run("pytest")
 
 
-@nox.session(python=False, tags=["qa"])
+@nox.session(python=False, tags=["qa", "pre-release"])
 def mypy(session):
     """Run static type-checking on source code."""
     session.run("mypy", "--install-types", "--non-interactive", "-p", PROJECT)
 
 
-@nox.session(python=False, tags=["qa"])
+@nox.session(python=False, tags=["qa", "pre-release"])
 def pylint(session):
     """Lint code using Pylint."""
     session.run("pylint", PROJECT, "--verbose")
 
 
-@nox.session(python=False, tags=["qa", "quick"])
+@nox.session(python=False, tags=["qa", "quick", "pre-release"])
 def flake8(session):
     """Lint code using Flake8."""
     session.run(
@@ -80,22 +79,27 @@ def flake8(session):
     )  # these warn
 
 
-@nox.session(python=False, tags=["qa"])
+@nox.session(python=False, tags=["qa", "pre-release"])
 def isort(session):
     """Fix module imports."""
     session.run("isort", ".")
 
 
-@nox.session(python=False, tags=["qa"])
-def isort(session):
+@nox.session(python=False, tags=["qa", "pre-release"])
+def black(session):
     """Format code with Black."""
     session.run("black", PROJECT)
 
 
-@nox.session(python=False, tags=["qa"])
+@nox.session(python=False, tags=["pre-release"])
+def manifest(session):
+    """Check distribution manifest."""
+    session.run("check-manifest", PROJECT)
+
+
+@nox.session(python=False, tags=["qa", "pre-release"])
 def precommit(session):
     """Run Pre-Commit fixers and checks."""
-    session.run("check-manifest")
     session.run("pre-commit", "run", "trailing-whitespace", "--files", "*.py")
     session.run("pre-commit", "run", "end-of-file-fixer", "--files", "*.py")
     session.run("pre-commit", "run", "check-yaml", "--all-files")
