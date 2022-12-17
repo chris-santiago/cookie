@@ -9,7 +9,7 @@ version = "0.1.0"
 description = "{{cookiecutter.project_short_description}}"
 readme = "README.md"
 license = { text ="MIT License" }
-requires-python = ">={{cookiecutter.python_version}}"
+requires-python = ">={{cookiecutter.python_requires}}"
 
 authors = [
     { name="{{cookiecutter.project_author}}", email="{{cookiecutter.author_email}}"}
@@ -97,7 +97,6 @@ line_length = 100
 
 
 [tool.mypy]
-python_version = "{{cookiecutter.python_version}}"
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true

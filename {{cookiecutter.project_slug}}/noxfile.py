@@ -2,23 +2,34 @@ import sys
 
 import nox
 
+nox.options.sessions = ["test_system_python"]
+nox.options.tags = ["qa"]
+
 PROJECT = "{{cookiecutter.project_slug}}"
-MIN_PYTHON = "3.7"
-CURR_PYTHON = f"{sys.version_info.major}.{sys.version_info.minor}"
+PYTHON_REQUIRES = "{{cookiecutter.python_version}}"
+PYTHON_SYS = f"{sys.version_info.major}.{sys.version_info.minor}"
 
 
-def python_versions():
+def python_versions(max_version=None):
     """Get a list of Python versions to test."""
+    if not max_version:
+        max_version = PYTHON_SYS
     return [
         f"3.{v}"
         for v in range(
-            int(MIN_PYTHON.rsplit(".", 1)[-1]), int(CURR_PYTHON.rsplit(".", 1)[-1])
+            int(PYTHON_REQUIRES.rsplit(".", 1)[-1]),
+            int(max_version.rsplit(".", 1)[-1]) + 1,
         )
     ]
 
 
-@nox.session(venv_backend="conda", python=python_versions(), reuse_venv=True)
-def test_other(session):
+@nox.session(
+    venv_backend="conda",
+    python=python_versions(),
+    reuse_venv=True,
+    tags=["tests", "pre-release"],
+)
+def test_supported_python(session):
     """
     Run unit tests in separate Python environments, from `MIN_PYTHON` to `CURR_PYTHON` versions.
 
@@ -33,26 +44,29 @@ def test_other(session):
     session.run("pytest")
 
 
-@nox.session(reuse_venv=True)
-def test_current(session):
+@nox.session(reuse_venv=True, tags=["quick"])
+def test_system_python(session):
     """Run unit tests in current Python environment."""
     session.install("pytest", "pytest-cov")
     session.install(".")
     session.run("pytest")
 
 
-@nox.session(python=False)
-def typing(session):
+@nox.session(python=False, tags=["qa"])
+def mypy(session):
     """Run static type-checking on source code."""
     session.run("mypy", "--install-types", "--non-interactive", "-p", PROJECT)
 
 
-@nox.session(python=False)
-def qa(session):
-    """Run QA code checks."""
-    session.run("isort", ".")
-    session.run("black", PROJECT)
+@nox.session(python=False, tags=["qa"])
+def pylint(session):
+    """Lint code using Pylint."""
     session.run("pylint", PROJECT, "--verbose")
+
+
+@nox.session(python=False, tags=["qa", "quick"])
+def flake8(session):
+    """Lint code using Flake8."""
     session.run(
         "flake8",
         PROJECT,
@@ -64,13 +78,30 @@ def qa(session):
     session.run(
         "flake8", PROJECT, "--count", "--statistics", "--exit-zero"
     )  # these warn
+
+
+@nox.session(python=False, tags=["qa"])
+def isort(session):
+    """Fix module imports."""
+    session.run("isort", ".")
+
+
+@nox.session(python=False, tags=["qa"])
+def isort(session):
+    """Format code with Black."""
+    session.run("black", PROJECT)
+
+
+@nox.session(python=False, tags=["qa"])
+def precommit(session):
+    """Run Pre-Commit fixers and checks."""
     session.run("check-manifest")
     session.run("pre-commit", "run", "trailing-whitespace", "--files", "*.py")
     session.run("pre-commit", "run", "end-of-file-fixer", "--files", "*.py")
     session.run("pre-commit", "run", "check-yaml", "--all-files")
 
 
-@nox.session(python=False)
+@nox.session(python=False, tags=["docs", "pre-release"])
 def docs(session):
     """Build package documentation."""
     session.run("sphinx-apidoc", "--separate", "-f", PROJECT, "-o", "docs/source/")

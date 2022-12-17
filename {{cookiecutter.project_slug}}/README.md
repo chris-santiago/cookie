@@ -2,7 +2,7 @@
 
 ## Install
 
-Create a virtual environment with Python {{cookiecutter.python_version}} and install from git:
+Create a virtual environment with Python >= {{cookiecutter.python_requires}} and install from git:
 
 ```bash
 pip install {{cookiecutter.project_github_pip}}
