@@ -7,6 +7,7 @@ nox.options.tags = ["pytest", "qa"]  # default tags to run using command `nox`
 PROJECT = "{{cookiecutter.project_slug}}"
 PYTHON_REQUIRES = "{{cookiecutter.python_requires}}"
 PYTHON_SYS = f"{sys.version_info.major}.{sys.version_info.minor}"
+PYLINT_REQUIRES = "9.0"
 
 
 def python_versions(max_version=None):
@@ -43,11 +44,9 @@ def test_supported_python(session):
     session.run("pytest")
 
 
-@nox.session(reuse_venv=True, tags=["quick", "pytest"])
+@nox.session(python=False, tags=["quick", "pytest"])
 def test_system_python(session):
     """Run unit tests in current Python environment."""
-    session.install("pytest", "pytest-cov")
-    session.install(".")
     session.run("pytest")
 
 
@@ -60,7 +59,7 @@ def mypy(session):
 @nox.session(python=False, tags=["qa", "pre-release"])
 def pylint(session):
     """Lint code using Pylint."""
-    session.run("pylint", PROJECT, "--verbose")
+    session.run("pylint", PROJECT, "--verbose", "--fail-under", PYLINT_REQUIRES)
 
 
 @nox.session(python=False, tags=["qa", "quick", "pre-release"])
