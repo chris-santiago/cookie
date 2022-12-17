@@ -184,6 +184,8 @@ flake8...................................................................Passed
 
 #### First Nox run:
 
+The first `nox` run is fairly quick as we're not creating any separate test environment, by default.  However, the first time you run the `tests` or `pre-release` tag will take some time as new environments are build; subsequent runs will be much faster as we reuse these virtual (conda) environments, by default.
+
 You'll see **a lot** of output:
 
 ```bash
