@@ -39,8 +39,3 @@ repos:
             '--show-source',
             '--max-line-length', '100',
         ]
-  # -------------------- Manifest --------------------
-  - repo: https://github.com/mgedmin/check-manifest
-    rev: stable
-    hooks:
-      - id: check-manifest
