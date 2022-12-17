@@ -6,7 +6,7 @@ nox.options.sessions = ["test_system_python"]
 nox.options.tags = ["qa"]
 
 PROJECT = "{{cookiecutter.project_slug}}"
-PYTHON_REQUIRES = "{{cookiecutter.python_requires}"
+PYTHON_REQUIRES = "{{cookiecutter.python_requires}}"
 PYTHON_SYS = f"{sys.version_info.major}.{sys.version_info.minor}"
 
 
