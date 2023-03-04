@@ -51,6 +51,18 @@ def test_system_python(session):
 
 
 @nox.session(python=False, tags=["qa", "pre-release"])
+def isort(session):
+    """Fix module imports."""
+    session.run("isort", ".")
+
+
+@nox.session(python=False, tags=["qa", "pre-release"])
+def black(session):
+    """Format code with Black."""
+    session.run("black", PROJECT)
+
+
+@nox.session(python=False, tags=["qa", "pre-release"])
 def mypy(session):
     """Run static type-checking on source code."""
     session.run("mypy", "--install-types", "--non-interactive", "-p", PROJECT)
@@ -76,18 +88,6 @@ def flake8(session):
     session.run(
         "flake8", PROJECT, "--count", "--statistics", "--exit-zero"
     )  # these warn
-
-
-@nox.session(python=False, tags=["qa", "pre-release"])
-def isort(session):
-    """Fix module imports."""
-    session.run("isort", ".")
-
-
-@nox.session(python=False, tags=["qa", "pre-release"])
-def black(session):
-    """Format code with Black."""
-    session.run("black", PROJECT)
 
 
 @nox.session(python=False, tags=["pre-release"])
