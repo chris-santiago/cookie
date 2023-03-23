@@ -31,8 +31,6 @@ tests = [
     "coverage",
     "pytest",
     "pytest-cov",
-    "toml",
-    "pre-commit-hooks"
 ]
 
 qa = [
@@ -45,7 +43,9 @@ qa = [
     "check-manifest",
     "isort",
     "pylint",
-    "check-manifest"
+    "check-manifest",
+    "toml",
+    "pre-commit-hooks"
 ]
 
 build = [

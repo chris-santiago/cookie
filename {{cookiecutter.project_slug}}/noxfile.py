@@ -5,27 +5,12 @@ import nox
 nox.options.tags = ["pytest", "qa"]  # default tags to run using command `nox`
 
 PROJECT = "{{cookiecutter.project_slug}}"
-PYTHON_REQUIRES = "{{cookiecutter.python_requires}}"
-PYTHON_SYS = f"{sys.version_info.major}.{sys.version_info.minor}"
-PYLINT_REQUIRES = "9.0"
-
-
-def python_versions(max_version=None):
-    """Get a list of Python versions to test."""
-    if not max_version:
-        max_version = PYTHON_SYS
-    return [
-        f"3.{v}"
-        for v in range(
-            int(PYTHON_REQUIRES.rsplit(".", 1)[-1]),
-            int(max_version.rsplit(".", 1)[-1]) + 1,
-        )
-    ]
+SUPPORTED_PYTHON = [{{cookiecutter.python_requires}}]
 
 
 @nox.session(
     venv_backend="conda",
-    python=python_versions(),
+    python=SUPPORTED_PYTHON,
     reuse_venv=True,
     tags=["tests", "pre-release"],
 )
@@ -39,8 +24,7 @@ def test_supported_python(session):
 
     Uses Conda backend, by default.
     """
-    session.install("pytest", "pytest-cov")
-    session.install(".")
+    session.install(".[tests]")
     session.run("pytest")
 
 
@@ -68,7 +52,7 @@ def mypy(session):
     session.run("mypy", "--install-types", "--non-interactive", "-p", PROJECT)
 
 
-@nox.session(python=False, tags=["qa", "pre-release"])
+@nox.session(python=False, tags=["qa"])
 def pylint(session):
     """Lint code using Pylint."""
     session.run("pylint", PROJECT, "--verbose", "--fail-under", PYLINT_REQUIRES)
@@ -96,16 +80,18 @@ def manifest(session):
     session.run("check-manifest", ".")
 
 
-@nox.session(python=False, tags=["qa", "pre-release"])
-def precommit(session):
-    """Run Pre-Commit fixers and checks."""
-    session.run("pre-commit", "run", "trailing-whitespace", "--files", "*.py")
-    session.run("pre-commit", "run", "end-of-file-fixer", "--files", "*.py")
-    session.run("pre-commit", "run", "check-yaml", "--all-files")
-
-
 @nox.session(python=False, tags=["docs", "pre-release"])
 def docs(session):
     """Build package documentation."""
     session.run("sphinx-apidoc", "--separate", "-f", PROJECT, "-o", "docs/source/")
     session.run("sphinx-build", "-b", "html", "docs/source/", "docs/build/html")
+
+
+@nox.session(python=False, tags=["build", "pre-release"])
+def dependencies(session):
+    session.run(
+        "pip-compile",
+        "--output-file=requirements.txt",
+        "pyproject.toml",
+        "--resolver=backtracking",
+    )
