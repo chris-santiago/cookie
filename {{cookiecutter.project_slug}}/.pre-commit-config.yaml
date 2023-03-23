@@ -20,7 +20,7 @@ repos:
         exclude: (^docs/)
       - id: trailing-whitespace
         name: trailing-whitespace
-        entry: trailing-whitespacepfixer
+        entry: trailing-whitespace-fixer
         language: system
         types: [ file, python ]
         exclude: (^docs/)

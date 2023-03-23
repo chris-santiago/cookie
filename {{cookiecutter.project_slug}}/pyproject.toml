@@ -128,3 +128,7 @@ ignore-docstrings = "yes"
 [tool.pytest.ini_options]
 testpaths = ["tests/"]
 addopts = "--cov={{cookiecutter.project_slug}} --cov-report=html --verbose"
+
+
+[tool.ruff]
+line-length = 100
