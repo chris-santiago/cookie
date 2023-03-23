@@ -45,7 +45,9 @@ qa = [
     "pylint",
     "check-manifest",
     "toml",
-    "pre-commit-hooks"
+    "ruff",
+    "pre-commit-hooks",
+    "pip-tools",
 ]
 
 build = [
