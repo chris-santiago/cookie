@@ -1,97 +1,34 @@
-import sys
+import os
 
 import nox
 
-nox.options.tags = ["pytest", "qa"]  # default tags to run using command `nox`
-
-PROJECT = "{{cookiecutter.project_slug}}"
-SUPPORTED_PYTHON = [{{cookiecutter.python_requires}}]
+os.environ.update({"PDM_IGNORE_SAVED_PYTHON": "1"})
 
 
-@nox.session(
-    venv_backend="conda",
-    python=SUPPORTED_PYTHON,
-    reuse_venv=True,
-    tags=["tests", "pre-release"],
-)
-def test_supported_python(session):
-    """
-    Run unit tests in separate Python environments, from `MIN_PYTHON` to `CURR_PYTHON` versions.
-
-    Notes
-    -----
-    Comment this session out if you don't require testing with other Python versions.
-
-    Uses Conda backend, by default.
-    """
-    session.install(".[tests]")
+@nox.session(reuse_venv=True)
+def tests(session):
+    session.run("pdm", "install", "-dG", "test", external=True)
     session.run("pytest")
 
 
-@nox.session(python=False, tags=["quick", "pytest"])
-def test_system_python(session):
-    """Run unit tests in current Python environment."""
-    session.run("pytest")
+@nox.session(reuse_venv=True)
+def lint(session):
+    session.run("pdm", "install", "-dG", "qa", external=True)
+    session.run("ruff", "{{cookiecutter.project_slug}}")
 
 
-@nox.session(python=False, tags=["qa", "pre-release"])
-def isort(session):
-    """Fix module imports."""
-    session.run("isort", ".")
+@nox.session(reuse_venv=True)
+def type_check(session):
+    session.run("pdm", "install", "-dG", "qa", external=True)
+    session.run("pyright", "{{cookiecutter.project_slug}}")
 
 
-@nox.session(python=False, tags=["qa", "pre-release"])
-def black(session):
-    """Format code with Black."""
-    session.run("black", PROJECT)
+# Uncomment if not using GitHub Actions to build
+# @nox.session(python=False, tags=["docs", "pre-release"])
+# def docs(session):
+#     session.run("mkdocs", "gh-deploy")
 
 
-@nox.session(python=False, tags=["qa", "pre-release"])
-def mypy(session):
-    """Run static type-checking on source code."""
-    session.run("mypy", "--install-types", "--non-interactive", "-p", PROJECT)
-
-
-@nox.session(python=False, tags=["qa"])
-def pylint(session):
-    """Lint code using Pylint."""
-    session.run("pylint", PROJECT, "--verbose", "--fail-under", PYLINT_REQUIRES)
-
-
-@nox.session(python=False, tags=["qa", "quick", "pre-release"])
-def flake8(session):
-    """Lint code using Flake8."""
-    session.run(
-        "flake8",
-        PROJECT,
-        "--count",
-        "--statistics",
-        "--select=E9,F63,F7,F82",
-        "--show-source",
-    )  # these fail
-    session.run(
-        "flake8", PROJECT, "--count", "--statistics", "--exit-zero"
-    )  # these warn
-
-
-@nox.session(python=False, tags=["pre-release"])
-def manifest(session):
-    """Check distribution manifest."""
+@nox.session(reuse_venv=True)
+def check_manifest(session):
     session.run("check-manifest", ".")
-
-
-@nox.session(python=False, tags=["docs", "pre-release"])
-def docs(session):
-    """Build package documentation."""
-    session.run("sphinx-apidoc", "--separate", "-f", PROJECT, "-o", "docs/source/")
-    session.run("sphinx-build", "-b", "html", "docs/source/", "docs/build/html")
-
-
-@nox.session(python=False, tags=["build", "pre-release"])
-def dependencies(session):
-    session.run(
-        "pip-compile",
-        "--output-file=requirements.txt",
-        "pyproject.toml",
-        "--resolver=backtracking",
-    )

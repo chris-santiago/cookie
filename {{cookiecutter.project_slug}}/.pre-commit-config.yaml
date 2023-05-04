@@ -1,11 +1,20 @@
 exclude: (^notebooks/)
 repos:
+  - repo: https://github.com/pdm-project/pdm
+    rev: 2.5.3 # a PDM release exposing the hook
+    hooks:
+      - id: pdm-lock-check
+      - id: pdm-export
+        # command arguments, e.g.:
+        args: [ '-o', 'requirements.txt', '--without-hashes', '--prod' ]
+        files: ^pdm.lock$
   - repo: local
     hooks:
       - id: ruff
         name: ruff
         entry: ruff
         language: system
+        args: [--fix, --exit-non-zero-on-fix]
         types: [ python ]
       - id: black
         name: black

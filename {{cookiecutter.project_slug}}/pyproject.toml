@@ -3,6 +3,29 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+test = [
+    "pytest>=7.3.1",
+    "pytest-cov>=4.0.0",
+    "coverage>=7.2.5",
+]
+qa = [
+    "ruff>=0.0.263",
+    "black>=23.3.0",
+    "pre-commit>=3.2.2",
+    "isort>=5.12.0",
+    "pre-commit-hooks>=4.4.0",
+    "pyright>=1.1.304",
+    "nox>=2023.4.22",
+]
+docs = [
+    "mkdocs-material>=9.1.8",
+    "mkdocstrings-python>=0.9.0",
+    "mkdocs-table-reader-plugin>=2.0",
+]
+
+
 [project]
 name = "{{cookiecutter.project_slug}}"
 version = "0.1.0"
@@ -19,53 +42,9 @@ dependencies = [
 ]
 
 
-[project.optional-dependencies]
-docs = [
-    "sphinx",
-    "sphinx-rtd-theme",
-    "myst-parser",
-    "tomli"
-]
-
-tests = [
-    "coverage",
-    "pytest",
-    "pytest-cov",
-]
-
-qa = [
-    "pre-commit",
-    "black",
-    "flake8",
-    "flake8-docstrings",
-    "mypy",
-    "nox",
-    "check-manifest",
-    "isort",
-    "pylint",
-    "check-manifest",
-    "toml",
-    "ruff",
-    "pre-commit-hooks",
-    "pip-tools",
-]
-
-build = [
-    "twine",
-    "wheel",
-]
-
-dev = [
-    "{{cookiecutter.project_slug}}[docs]",
-    "{{cookiecutter.project_slug}}[tests]",
-    "{{cookiecutter.project_slug}}[qa]",
-    "{{cookiecutter.project_slug}}[build]",
-]
-
-
 [project.urls]
-"Sourcecode" = "https://github.com/chris-santiago/{{cookiecutter.project_slug}}"
-"Documentation" = "https://chris-santiago.github.io/{{cookiecutter.project_slug}}/"
+"Sourcecode" = "{{cookiecutter.project_github_url}}"
+"Documentation" = "https://{{cookiecutter.github_owner}}.github.io/{{cookiecutter.project_slug}}/"
 
 
 [tool.setuptools]
@@ -86,45 +65,13 @@ ignore = [
     "notebooks/**",
     ".pre-commit-config.yaml",
     ".gitignore",
-    ".pylintrc",
-    "Makefile",
     "noxfile.py",
-    "init.sh",
+    "mkdocs.yml",
 ]
 
 
 [tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-line_length = 100
-
-
-[tool.mypy]
-warn_return_any = true
-warn_unused_configs = true
-ignore_missing_imports = true
-
-
-[tool.pylint.master]
-fail-under = 9.0
-ignore-patterns = "test"
-disable = [
-    # Disable these for scikit-learn style code
-    "invalid-name",
-    "attribute-defined-outside-init",
-]
-
-
-[tool.pylint.format]
-max-line-length = 100
-max-module-lines = 1000
-
-
-[tool.pylint.similarities]
-min-similarity-lines = 4
-ignore-comments = "yes"
-ignore-docstrings = "yes"
+profile = "black"
 
 
 [tool.pytest.ini_options]
