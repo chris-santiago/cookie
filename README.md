@@ -40,13 +40,22 @@ Using a Python environment with `cookiecutter` installed, run:
 
 and complete the prompts.
 
-This cookie executes a post-generation script (`hooks/post_gen_project.sh`) that will:
+```bash
+cd <your project dir>
+conda env create -f environment.yml
+conda activate <your env name>
+pdm install
+git init
+pre-commit install
+```
+
+~~This cookie executes a post-generation script (`hooks/post_gen_project.sh`) that will:
 
 1. Create a virtual environment via Conda
 2. Install all development dependencies in your virtual environment
 3. Install your project (editable) in your virtual environment
 4. Initialize a git repo in your new project directory
-5. Install pre-commit in your repo
+5. Install pre-commit in your repo~~
 
 ## PDM Quickstart
 

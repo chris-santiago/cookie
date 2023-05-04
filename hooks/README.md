@@ -1,4 +1,8 @@
-#!/bin/bash
+This post-gen script fails at the `source activate` command.  No idea why.  Keeping here for future
+reference.
+
+```bash
+#!/bin/zsh
 
 error_trap() {
   local parent_lineno="$(caller)"
@@ -14,13 +18,14 @@ error_trap() {
 trap error_trap ERR
 
 ####################################################################################################
-
-conda env create -f environment.yml &&
-source activate {{cookiecutter.project_slug}} &&
 # assumes that PDM is installed via Homebrew
 # https://pdm.fming.dev/latest/#recommended-installation-method
+
+conda env create -f environment.yml
+source activate {{cookiecutter.project_slug}}
 # Uncomment this line to have PDM installed in virtual environment via pip
 # pip install pdm &&
-pdm install &&
-git init &&
+pdm install
+git init
 pre-commit install
+```

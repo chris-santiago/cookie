@@ -8,5 +8,8 @@
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
   "project_github_url": "https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}",
-  "project_github_pip" : "git+https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}.git"
+  "project_github_pip" : "git+https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}.git",
+  "_copy_without_render": [
+        ".github/workflows/*.yaml"
+    ]
 }

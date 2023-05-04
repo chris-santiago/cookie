@@ -18,4 +18,4 @@ dependencies:
   - wheel=0.40.0
   - xz=5.2.6
   - pip:
-    - -r requirements.txt
+    - -r ./requirements.txt
