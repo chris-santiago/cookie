@@ -49,9 +49,9 @@ git init
 pre-commit install
 ```
 
-~~This cookie executes a post-generation script (`hooks/post_gen_project.sh`) that will:
+~~This cookie executes a post-generation script (`hooks/post_gen_project.sh`) that will:~~
 
-1. Create a virtual environment via Conda
+~~1. Create a virtual environment via Conda
 2. Install all development dependencies in your virtual environment
 3. Install your project (editable) in your virtual environment
 4. Initialize a git repo in your new project directory
