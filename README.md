@@ -16,21 +16,23 @@ desired (though not recommended).
 
 ## Included Tools
 
-| Function                       | Tool                | Link                                         |
-|--------------------------------|---------------------|----------------------------------------------|
-| Dependency management          | PDM                 | https://pdm.fming.dev/latest/                |
-| Documentation                  | MkDocs              | https://www.mkdocs.org/                      |
-| Documentation: theme           | Material for MkDocs | https://squidfunk.github.io/mkdocs-material/ |
-| Documentation: auto docstrings | mkdocstrings-python | https://mkdocstrings.github.io/python/       |
-| Automated testing              | Nox                 | https://nox.thea.codes/en/stable/index.html  |
-| Testing                        | pytest              | https://docs.pytest.org/en/7.3.x/            |
-| Linting                        | ruff                | https://beta.ruff.rs/docs/                   |
-| Type checking                  | Pyright             | https://microsoft.github.io/pyright/#/       |
-| Formatting                     | Black               | https://black.readthedocs.io/en/stable/      |
-| Automated QA                   | pre-commit          | https://pre-commit.com/                      |
-| QA                             | isort               | https://pycqa.github.io/isort/               |
-| QA                             | check-manifest      | https://github.com/mgedmin/check-manifest    |
-| Linting                        | SQLFluff            | https://www.sqlfluff.com/                    |
+| Function                         | Tool                | Link                                         |
+|----------------------------------|---------------------|----------------------------------------------|
+| Dependency management            | PDM                 | https://pdm.fming.dev/latest/                |
+| Documentation                    | MkDocs              | https://www.mkdocs.org/                      |
+| Documentation: theme             | Material for MkDocs | https://squidfunk.github.io/mkdocs-material/ |
+| Documentation: auto docstrings   | mkdocstrings-python | https://mkdocstrings.github.io/python/       |
+| Automated testing                | Nox                 | https://nox.thea.codes/en/stable/index.html  |
+| Testing                          | pytest              | https://docs.pytest.org/en/7.3.x/            |
+| Linting                          | ruff                | https://beta.ruff.rs/docs/                   |
+| Type checking                    | Pyright             | https://microsoft.github.io/pyright/#/       |
+| Formatting                       | Black               | https://black.readthedocs.io/en/stable/      |
+| Automated QA                     | pre-commit          | https://pre-commit.com/                      |
+| QA                               | isort               | https://pycqa.github.io/isort/               |
+| QA                               | check-manifest      | https://github.com/mgedmin/check-manifest    |
+| Linting                          | SQLFluff            | https://www.sqlfluff.com/                    |
+| Documentation: Build and publish | GitHub Actions      | https://docs.github.com/en/actions           |
+| PyPI: Publish                    | GitHub Actions      | https://docs.github.com/en/actions           |
 
 ## Getting Started
 
