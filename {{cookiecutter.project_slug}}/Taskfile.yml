@@ -1,13 +1,24 @@
 version: "3"
 
 # You can also ask Task to include .env like files by using the dotenv: setting:
-dotenv: [".env", "{{.ENV}}/.env.", "{{.HOME}}/.env"]
+{% raw %}dotenv: ['.env', '{{.ENV}}/.env.', '{{.HOME}}/.env']{% endraw %}
 
 # If `--` is given in the CLI, all following parameters are added to a special .CLI_ARGS variable.
 # This is useful to forward arguments to another command.
 
 tasks:
 
-  default:
+  check-config:
+    desc: Check Hydra configuration
     cmds:
-      - echo "Hello, visit https://taskfile.dev/usage/ for usage docs."
+      - python src/{{cookiecutter.project_slug}}/train.py --cfg all --resolve {% raw %}{{.CLI_ARGS}}{% endraw %}
+
+  wandb:
+    desc: Login to Weights & Biases
+    cmds:
+      - wandb login $WANDB_KEY
+
+  train:
+    desc: Train a model
+    cmds:
+      - python src/{{cookiecutter.project_slug}}/train.py {% raw %}{{.CLI_ARGS}}{% endraw %}
