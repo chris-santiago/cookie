@@ -10,6 +10,6 @@
   "project_github_url": "https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}",
   "project_github_pip" : "git+https://github.com/{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}.git",
   "_copy_without_render": [
-        ".github/workflows/*.yaml"
+        ".github/workflows/*.yaml", "Taskfile.yml"
     ]
 }
