@@ -24,9 +24,9 @@ desired (though not recommended).
 | Documentation: auto docstrings   | mkdocstrings-python | https://mkdocstrings.github.io/python/       |
 | Automated testing                | Nox                 | https://nox.thea.codes/en/stable/index.html  |
 | Testing                          | pytest              | https://docs.pytest.org/en/7.3.x/            |
-| Linting                          | ruff                | https://beta.ruff.rs/docs/                   |
+| Linting                          | ruff                | https://docs.astral.sh/ruff/                 |
 | Type checking                    | Pyright             | https://microsoft.github.io/pyright/#/       |
-| Formatting                       | Black               | https://black.readthedocs.io/en/stable/      |
+| Formatting                       | ruff                | https://docs.astral.sh/ruff/                 |
 | Automated QA                     | pre-commit          | https://pre-commit.com/                      |
 | QA                               | isort               | https://pycqa.github.io/isort/               |
 | QA                               | check-manifest      | https://github.com/mgedmin/check-manifest    |
