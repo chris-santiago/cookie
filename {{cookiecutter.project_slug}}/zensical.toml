@@ -1,0 +1,58 @@
+[project]
+site_name = "{{cookiecutter.project_name}}"
+site_description = "{{cookiecutter.project_short_description}}"
+site_author = "{{cookiecutter.project_author}}"
+site_url = "https://{{cookiecutter.github_owner}}.github.io/{{cookiecutter.project_slug}}/"
+copyright = "Copyright &copy; {{cookiecutter.project_author}}"
+
+repo_url = "{{cookiecutter.project_github_url}}"
+repo_name = "{{cookiecutter.github_owner}}/{{cookiecutter.project_slug}}"
+
+nav = [
+  { Home = "index.md" },
+]
+
+[project.theme]
+variant = "classic"
+language = "en"
+features = [
+  "content.code.annotate",
+  "content.code.copy",
+  "content.tabs.link",
+  "navigation.footer",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+]
+
+[project.plugins.autorefs]
+
+[project.plugins.mkdocstrings.handlers.python]
+paths = ["src"]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "numpy"
+show_source = false
+show_root_heading = true
+show_root_full_path = true
+members_order = "source"
+separate_signature = true
+show_signature_annotations = true
+docstring_section_style = "table"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.snippets]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true

@@ -1,34 +1,30 @@
-import os
-
 import nox
 
-os.environ.update({"PDM_IGNORE_SAVED_PYTHON": "1"})
+nox.options.default_venv_backend = "uv"
 
 
-@nox.session(reuse_venv=True)
+@nox.session
 def tests(session):
-    session.run("pdm", "install", "-dG", "test", external=True)
-    session.run("pytest")
+    session.run("uv", "sync", "--all-extras", "--all-groups", external=True)
+    session.run("uv", "run", "pytest", "-n", "auto", *session.posargs, external=True)
 
 
-@nox.session(reuse_venv=True)
+@nox.session(python=False)
 def lint(session):
-    session.run("pdm", "install", "-dG", "qa", external=True)
-    session.run("ruff", "{{cookiecutter.project_slug}}")
+    session.run("uvx", "ruff", "check", "src/{{cookiecutter.project_slug}}", "--fix", external=True)
+    session.run("uvx", "ruff", "format", "src/{{cookiecutter.project_slug}}", external=True)
 
 
-@nox.session(reuse_venv=True)
+@nox.session(python=False)
 def type_check(session):
-    session.run("pdm", "install", "-dG", "qa", external=True)
-    session.run("pyright", "{{cookiecutter.project_slug}}")
+    session.run("uvx", "ty", "check", "src/{{cookiecutter.project_slug}}", external=True)
 
 
-# Uncomment if not using GitHub Actions to build
-# @nox.session(python=False, tags=["docs", "pre-release"])
-# def docs(session):
-#     session.run("mkdocs", "gh-deploy")
+@nox.session()
+def build(session: nox.Session) -> None:
+    session.run("uv", "build", external=True)
 
 
-@nox.session(reuse_venv=True)
-def check_manifest(session):
-    session.run("check-manifest", ".")
+@nox.session
+def docs(session: nox.Session) -> None:
+    session.run("uv", "run", "zensical", "build", external=True)

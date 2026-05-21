@@ -1,101 +1,76 @@
 # Cookiecutter Template
 
-[Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/README.html) is command-line utility 
-that creates projects from cookiecutters (project templates), e.g. creating a Python package project 
-from a Python package project template.
-
-- Documentation: [https://cookiecutter.readthedocs.io](https://cookiecutter.readthedocs.io)
-- GitHub: [https://github.com/cookiecutter/cookiecutter](https://github.com/cookiecutter/cookiecutter)
-
-## PDM 
-
-This cookie assumes that you've installed PDM via these [instructions](https://pdm.fming.dev/latest/#update-the-pdm-version)
-
-The `post_gen_project.sh` hook can be modified to install PDM in virtual environment via pip, if
-desired (though not recommended).
+A [Cookiecutter](https://cookiecutter.readthedocs.io/en/stable/README.html) template for Python packages using modern tooling.
 
 ## Included Tools
 
-| Function                         | Tool                | Link                                         |
-|----------------------------------|---------------------|----------------------------------------------|
-| Dependency management            | PDM                 | https://pdm.fming.dev/latest/                |
-| Documentation                    | MkDocs              | https://www.mkdocs.org/                      |
-| Documentation: theme             | Material for MkDocs | https://squidfunk.github.io/mkdocs-material/ |
-| Documentation: auto docstrings   | mkdocstrings-python | https://mkdocstrings.github.io/python/       |
-| Automated testing                | Nox                 | https://nox.thea.codes/en/stable/index.html  |
-| Testing                          | pytest              | https://docs.pytest.org/en/7.3.x/            |
-| Linting                          | ruff                | https://docs.astral.sh/ruff/                 |
-| Type checking                    | Pyright             | https://microsoft.github.io/pyright/#/       |
-| Formatting                       | ruff                | https://docs.astral.sh/ruff/                 |
-| Automated QA                     | pre-commit          | https://pre-commit.com/                      |
-| QA                               | isort               | https://pycqa.github.io/isort/               |
-| QA                               | check-manifest      | https://github.com/mgedmin/check-manifest    |
-| Linting                          | SQLFluff            | https://www.sqlfluff.com/                    |
-| Documentation: Build and publish | GitHub Actions      | https://docs.github.com/en/actions           |
-| PyPI: Publish                    | GitHub Actions      | https://docs.github.com/en/actions           |
+| Function                       | Tool                | Link                                         |
+|--------------------------------|---------------------|----------------------------------------------|
+| Package management             | uv                  | https://docs.astral.sh/uv/                   |
+| Build backend                  | Hatchling           | https://hatch.pypa.io/latest/                |
+| Documentation                  | Zensical            | https://zensical.com/                        |
+| Documentation: theme           | Material for MkDocs | https://squidfunk.github.io/mkdocs-material/ |
+| Documentation: auto docstrings | mkdocstrings-python | https://mkdocstrings.github.io/python/       |
+| Task automation                | Nox                 | https://nox.thea.codes/en/stable/            |
+| Testing                        | pytest              | https://docs.pytest.org/                     |
+| Linting                        | ruff                | https://docs.astral.sh/ruff/                 |
+| Formatting                     | ruff                | https://docs.astral.sh/ruff/                 |
+| Type checking                  | ty                  | https://docs.astral.sh/ty/                   |
+| Import sorting                 | isort               | https://pycqa.github.io/isort/               |
+| Pre-commit hooks               | pre-commit          | https://pre-commit.com/                      |
+| Documentation: publish         | GitHub Actions      | https://docs.github.com/en/actions           |
+| PyPI: publish                  | GitHub Actions      | https://docs.github.com/en/actions           |
 
 ## Getting Started
 
-Using a Python environment with `cookiecutter` installed, run:
-
-`cookiecutter https://github.cloud.capitalone.com/lno127/cookie.git`
-
-and complete the prompts.
+With `cookiecutter` and `uv` installed:
 
 ```bash
-cd <your project dir>
+cookiecutter https://github.com/chris-santiago/cookie.git
+```
+
+Complete the prompts, then:
+
+```bash
+cd <your-project>
 conda env create -f environment.yml
-conda activate <your env name>
-pdm install
+conda activate <your-env-name>
+uv sync
 git init
 pre-commit install
 ```
 
-~~This cookie executes a post-generation script (`hooks/post_gen_project.sh`) that will:~~
+## uv Quickstart
 
-~~1. Create a virtual environment via Conda
-2. Install all development dependencies in your virtual environment
-3. Install your project (editable) in your virtual environment
-4. Initialize a git repo in your new project directory
-5. Install pre-commit in your repo~~
+### Add a dependency
 
-## PDM Quickstart
+```bash
+uv add numpy
+```
 
-As installed via this cookie, PDM will automatically detect the Conda virtual environment and operate
-within. See [Working with Virtual Environments](https://pdm.fming.dev/latest/usage/venv/) for other
-options.
+### Add a dev dependency
 
-Here are a few commands to get you started. For much more, see the [CLI Reference](https://pdm.fming.dev/latest/reference/cli/)
-or [Manage Dependencies](https://pdm.fming.dev/latest/usage/dependency/) guide.
+```bash
+uv add --group dev pytest
+```
 
-### Add a required dependency
+### List dependencies
 
-`pdm add <package>`
+```bash
+uv tree
+```
 
-Example: `pdm add numpy`
+### Run a command in the project environment
 
+```bash
+uv run pytest
+```
 
-### Add a development dependency
+### Lock and sync
 
-`pdm add -d <package>`
+```bash
+uv lock
+uv sync
+```
 
-Example: `pdm add -d flake8`
-
-
-### Add a development dependency into a specific group
-
-`pdm add -dG <group name> <package>`
-
-Example: `pdm add -dG qa flake8`
-
-### List Dependencies
-
-`pdm list`
-
-### List Dependencies as Graph
-
-`pdm list --graph`
-
-### Export Dependencies
-
-`pdm export -o requirements.txt`
+For more, see the [uv documentation](https://docs.astral.sh/uv/).
